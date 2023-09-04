@@ -1,0 +1,16 @@
+{
+  "appId": "com.exemplo.meuapp",
+  "appName": "meuapp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "server": {
+    "androidScheme": "https"
+  }
+}
