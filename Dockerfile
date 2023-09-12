@@ -8,15 +8,13 @@ ENV ANDROID_SDK_ROOT  ${ANDROID_HOME}
 ENV ANDROID_SDK       ${ANDROID_HOME}
 
 ENV NODE_VERSION     18
-ENV CORDOVA_VERSION  11.0.0
-ENV GRADLE_VERSION   7.4.2
-# ENV NPM_VERSION      9.8.1
+ENV GRADLE_VERSION   8.1.1
 ENV NPM_VERSION      10.0.0
 
 ENV PATH "${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
 ENV PATH "${PATH}:${ANDROID_HOME}/cmdline-tools/tools/bin"
 ENV PATH "${PATH}:${ANDROID_HOME}/tools/bin"
-ENV PATH "${PATH}:${ANDROID_HOME}/build-tools/32.0.0"
+ENV PATH "${PATH}:${ANDROID_HOME}/build-tools/33.0.2"
 ENV PATH "${PATH}:${ANDROID_HOME}/platform-tools"
 ENV PATH "${PATH}:${ANDROID_HOME}/emulator"
 ENV PATH "${PATH}:${ANDROID_HOME}/bin"
@@ -37,14 +35,14 @@ WORKDIR /opt/android-sdk-linux
 RUN /opt/tools/entrypoint.sh built-in
 
 RUN /opt/android-sdk-linux/cmdline-tools/tools/bin/sdkmanager "cmdline-tools;latest" && \
-    /opt/android-sdk-linux/cmdline-tools/tools/bin/sdkmanager "build-tools;32.0.0" && \
+    /opt/android-sdk-linux/cmdline-tools/tools/bin/sdkmanager "build-tools;33.0.2" && \
     /opt/android-sdk-linux/cmdline-tools/tools/bin/sdkmanager "platform-tools" && \
-    /opt/android-sdk-linux/cmdline-tools/tools/bin/sdkmanager "platforms;android-31" && \
+    /opt/android-sdk-linux/cmdline-tools/tools/bin/sdkmanager "platforms;android-33" && \
     /opt/android-sdk-linux/cmdline-tools/tools/bin/sdkmanager "system-images;android-31;google_apis;x86_64"
 
-CMD /opt/tools/entrypoint.sh built-in
+# CMD /opt/tools/entrypoint.sh built-in
 
-# Install Node.js 16 and cordova
+# Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
     apt-get install -y nodejs
 
@@ -69,9 +67,3 @@ RUN tar xf android-studio.tar.gz -C /opt/android-studio --strip-components=1
 RUN rm -f android-studio.tar.gz
 
 ENV CAPACITOR_ANDROID_STUDIO_PATH /opt/android-studio/bin/studio.sh
-
-COPY entrypoint.sh /app
-
-RUN chmod +x /app/entrypoint.sh
-
-ENTRYPOINT ["/app/entrypoint.sh"]
